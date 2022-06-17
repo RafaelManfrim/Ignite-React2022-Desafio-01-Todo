@@ -1,5 +1,5 @@
 import { v4 as uuidV4 } from 'uuid';
-import { FormEvent, useState } from 'react'
+import { FormEvent, useEffect, useState } from 'react'
 import { FiPlusCircle, FiCircle, FiCheckCircle, FiTrash2 } from 'react-icons/fi'
 import styles from './App.module.css'
 import logo from './assets/Logo.svg'
@@ -26,7 +26,11 @@ export default function App() {
       id: uuidV4()
     }
 
-    setTasks(oldState => [...oldState, newTask])
+    setTasks(oldState => {
+      const newTaskList = [...oldState, newTask]
+      localStorage.setItem("@todo/tasks", JSON.stringify(newTaskList));
+      return newTaskList
+    })
     setTaskTitle('')
   }
 
@@ -39,12 +43,19 @@ export default function App() {
     })
 
     setTasks(tasksWithTaskStatusChanged)
+    localStorage.setItem("@todo/tasks", JSON.stringify(tasksWithTaskStatusChanged));
   }
 
   function handleDeleteTask(id: string) {
     const tasksWithoutDeletedTask = tasks.filter(task => task.id !== id)
     setTasks(tasksWithoutDeletedTask)
+    localStorage.setItem("@todo/tasks", JSON.stringify(tasksWithoutDeletedTask));
   }
+
+  useEffect(() => {
+    const taskList = JSON.parse(localStorage.getItem("@todo/tasks")!);
+    setTasks(taskList)
+  }, [])
 
   return (
     <div className={styles.app}>
