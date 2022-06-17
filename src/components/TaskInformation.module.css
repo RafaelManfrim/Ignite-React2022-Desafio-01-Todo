@@ -1,0 +1,26 @@
+.taskInformation {
+  gap: 0.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.taskInformation strong {
+  font-size: 0.875rem;
+}
+
+.textBlue {
+  color: var(--blue);
+}
+
+.textPurple {
+  color: var(--purple);
+}
+
+.taskInformation span {
+  background: var(--gray-400);
+  color: var(--gray-200);
+  padding: 0.125rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
